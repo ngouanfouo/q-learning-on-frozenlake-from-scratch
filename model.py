@@ -14,8 +14,13 @@ def init_q_table(num_states, num_actions):
     # TODO: build a 2D float64 numpy array of zeros sized by states and actions.
     return np.zeros((num_states,num_actions),dtype=np.float64)
 
-# Step 2 - max_q_value (not yet solved)
-# TODO: implement
+# Step 2 - max_q_value
+import numpy as np
+
+def max_q_value(q_table, state):
+    """Return the maximum Q value across all actions for the given state."""
+    # TODO: index the row for `state` and return its maximum value
+    return float(np.max(q_table[state]))
 
 # Step 3 - greedy_action (not yet solved)
 # TODO: implement
