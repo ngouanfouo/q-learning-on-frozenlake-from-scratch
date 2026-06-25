@@ -108,11 +108,33 @@ def run_training_episode(env, q_table, epsilon, alpha, gamma, rng, max_steps=200
             break
     return total_reward
 
-# Step 13 - train_q_learning (not yet solved)
-# TODO: implement
+# Step 13 - train_q_learning
+import numpy as np
 
-# Step 14 - extract_greedy_policy (not yet solved)
-# TODO: implement
+def train_q_learning(env, num_episodes, alpha=0.1, gamma=0.99, epsilon_start=1.0, epsilon_min=0.05, epsilon_decay=0.995, seed=0, max_steps=200):
+    # TODO: train a Q-learning agent for num_episodes; return (q_table, returns)
+    rng=np.random.default_rng(seed)
+
+    env.reset(seed=seed)
+    env.action_space.seed(seed)
+
+    num_states=env.observation_space.n
+    num_actions=env.action_space.n
+    q_table=np.zeros((num_states,num_actions),dtype=np.float64)
+
+    episode_returns=[]
+    epsilon=epsilon_start
+
+    for episode in range(num_episodes):
+        total_reward=run_training_episode(env,q_table,epsilon,alpha,gamma,rng,max_steps)
+        episode_returns.append(total_reward)
+        epsilon=decay_epsilon(epsilon,epsilon_decay,epsilon_min)
+    return q_table,episode_returns
+
+# Step 14 - extract_greedy_policy
+def extract_greedy_policy(q_table):
+    # TODO: return a 1D int64 array mapping each state to its best (argmax) actio
+    return np.argmax(q_table,axis=1).astype(np.int64)
 
 # Step 15 - run_greedy_episode (not yet solved)
 # TODO: implement
